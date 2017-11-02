@@ -7,25 +7,23 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>dao</artifactId>
+    <artifactId>service</artifactId>
     <packaging>jar</packaging>
 
-    <name>dao</name>
+    <name>service</name>
     <url>http://maven.apache.org</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <dao-version>1.0-SNAPSHOT</dao-version>
     </properties>
 
     <dependencies>
-        <!--Hibernate-->
+        <!--DAO-->
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
+            <groupId>by.grechishnikov</groupId>
+            <artifactId>dao</artifactId>
+            <version>${dao-version}</version>
         </dependency>
         <!--Spring-->
         <dependency>
@@ -48,31 +46,10 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
         </dependency>
-        <!--HikariCP-->
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-            <version>${hicari-version}</version>
-        </dependency>
-        <!--MySQL-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
         <!--jUnit-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-        </dependency>
-        <!--Lombok-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-        <!--Log-->
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
         </dependency>
     </dependencies>
 </project>
