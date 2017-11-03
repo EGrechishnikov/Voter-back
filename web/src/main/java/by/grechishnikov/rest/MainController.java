@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(value = "http://localhost:3000")
 public class MainController {
     private IUserService userService;
     private Logger logger = Logger.getLogger(MainController.class);
@@ -19,14 +20,14 @@ public class MainController {
     }
 
     @RequestMapping(value = "/user/add", method = RequestMethod.POST)
-    public ResponseEntity add(@RequestBody User user) {
+    public ResponseEntity<User> add(@RequestBody User user) {
         try {
             logger.warn("NEW USER: " + user);
-            userService.saveOrUpdate(user);
-            return new ResponseEntity(HttpStatus.OK);
+            userService.createNewUser(user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("ERROR!", e);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

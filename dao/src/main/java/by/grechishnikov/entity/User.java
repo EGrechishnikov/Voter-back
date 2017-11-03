@@ -22,6 +22,8 @@ public class User implements Bean {
     private String login;
     @Column(nullable = false, length = 30)
     private String password;
+    @Column
+    private String salt;
     @OneToMany(mappedBy = "voter")
     @JsonIgnore
     private List<Vote> votesList = new ArrayList<>();
@@ -29,8 +31,9 @@ public class User implements Bean {
     @JsonIgnore
     private List<Voting> createdVotingsList = new ArrayList<>();
 
-    public User(String login, String password) {
+    public User(String login, String password, String salt) {
         this.login = login;
         this.password = password;
+        this.salt = salt;
     }
 }

@@ -31,11 +31,11 @@ public class VoteService implements IVoteService {
 
     @Override
     public void delete(Vote vote) {
-
+        voteDAO.delete(vote);
     }
 
     @Override
     public List<Vote> getAll() {
-        return null;
+        return voteDAO.getAll();
     }
 }
