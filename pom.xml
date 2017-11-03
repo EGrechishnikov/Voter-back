@@ -8,10 +8,11 @@
     <modules>
         <module>dao</module>
         <module>service</module>
+        <module>web</module>
     </modules>
     <packaging>pom</packaging>
 
-    <name>Voter</name>
+    <name>voter</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -26,6 +27,8 @@
         <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
         <mysql-version>5.1.38</mysql-version>
         <log4j-version>1.2.17</log4j-version>
+        <jackson-version>2.7.1</jackson-version>
+        <tiles.version>3.0.5</tiles.version>
     </properties>
 
     <dependencyManagement>
@@ -77,6 +80,11 @@
                 <artifactId>spring-orm</artifactId>
                 <version>${spring-version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${spring-version}</version>
+            </dependency>
             <!--HikariCP-->
             <dependency>
                 <groupId>com.zaxxer</groupId>
@@ -88,6 +96,28 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-version}</version>
+            </dependency>
+            <!--JSON-->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson-version}</version>
+            </dependency>
+            <!--Tiles-->
+            <dependency>
+                <groupId>org.apache.tiles</groupId>
+                <artifactId>tiles-api</artifactId>
+                <version>${tiles.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tiles</groupId>
+                <artifactId>tiles-core</artifactId>
+                <version>${tiles.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tiles</groupId>
+                <artifactId>tiles-jsp</artifactId>
+                <version>${tiles.version}</version>
             </dependency>
             <!--Test-->
             <dependency>

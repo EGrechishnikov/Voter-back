@@ -24,10 +24,10 @@ public class ServiceTest {
     @Test
     public void test() {
         int size = userService.getAll().size();
-        User user = new User("user2", "password2");
+        User user = new User("newTestUser", "password");
         userService.saveOrUpdate(user);
         int id = user.getId();
-        assertEquals(user, userService.get("user2"));
+        assertEquals(user, userService.get("newTestUser"));
         assertEquals(++size, userService.getAll().size());
         user.setPassword("pass");
         userService.saveOrUpdate(user);

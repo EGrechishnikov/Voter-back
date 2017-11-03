@@ -2,6 +2,7 @@ package by.grechishnikov.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
 @Table(name = "voting")
 @Data
 @NoArgsConstructor
+@ToString(exclude = "variantsList")
 public class Voting implements Bean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

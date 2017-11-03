@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="dao" />
         <module name="service" />
+        <module name="web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="dao" target="1.8" />
       <module name="service" target="1.8" />
       <module name="Voter" target="1.8" />
+      <module name="web" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
