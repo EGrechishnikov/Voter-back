@@ -31,7 +31,20 @@ public class MainController {
         }
     }
 
-    @RequestMapping(value = "/user/get/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    public ResponseEntity<User> login(@RequestBody User user) {
+        try {
+            logger.warn("CHECK USER: " + user);
+            user = userService.login(user);
+            logger.warn("RESPONSE USER: " + user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("ERROR!", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/user/check/{id}", method = RequestMethod.GET)
     public ResponseEntity<User> get(@PathVariable int id) {
         try {
             logger.warn("GET: " + id);
