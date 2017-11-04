@@ -32,12 +32,10 @@ public class MainController {
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public ResponseEntity<User> login(@RequestBody User user) {
+    public ResponseEntity<Boolean> login(@RequestBody User user) {
         try {
             logger.warn("CHECK USER: " + user);
-            user = userService.login(user);
-            logger.warn("RESPONSE USER: " + user);
-            return new ResponseEntity<>(user, HttpStatus.OK);
+            return new ResponseEntity<>(userService.login(user), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("ERROR!", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

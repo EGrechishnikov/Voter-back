@@ -66,7 +66,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User login(User user) {
+    public boolean login(User user) {
         logger.warn("USER LOGIN: " +  user);
         if(isUsersParamValid(user)) {
             User userInDB = get(user.getLogin());
@@ -75,11 +75,11 @@ public class UserService implements IUserService {
                 user.setSalt(userInDB.getSalt());
                 hashUserPassword(user);
                 if(user.getPassword().equals(userInDB.getPassword())) {
-                    return userInDB;
+                    return true;
                 }
             }
         }
-        return null;
+        return false;
     }
 
     private void hashUserPassword(User user) {
