@@ -57,12 +57,20 @@ public class UserService implements IUserService {
         return user.getLogin().length() > 0 && user.getPassword().length() > 0;
     }
 
+    private boolean isLoginFree(String login) {
+        return userDAO.isLoginFree(login);
+    }
+
     @Override
-    public User createNewUser(User user) {
-        user.setSalt(PasswordHash.getSalt());
-        hashUserPassword(user);
-        saveOrUpdate(user);
-        return user;
+    public boolean createNewUser(User user) {
+        if(isUsersParamValid(user) && isLoginFree(user.getLogin())) {
+            user.setSalt(PasswordHash.getSalt());
+            hashUserPassword(user);
+            saveOrUpdate(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
