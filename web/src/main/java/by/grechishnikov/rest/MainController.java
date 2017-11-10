@@ -31,7 +31,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> login(@RequestBody User user) {
+    public ResponseEntity<User> login(@RequestBody User user) {
         try {
             logger.warn("CHECK USER: " + user);
             return new ResponseEntity<>(userService.login(user), HttpStatus.OK);

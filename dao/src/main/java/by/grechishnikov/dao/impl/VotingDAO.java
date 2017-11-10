@@ -6,10 +6,18 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+@SuppressWarnings("unchecked")
 @Repository
 public class VotingDAO extends BaseDAO<Voting> implements IVotingDAO {
     @Autowired
     public VotingDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
+    }
+
+    @Override
+    public List<Voting> getAll(int start, int count) {
+        return super.getSession().createQuery("FROM Voting ORDER BY closingDate").setFirstResult(start).setMaxResults(count).list();
     }
 }

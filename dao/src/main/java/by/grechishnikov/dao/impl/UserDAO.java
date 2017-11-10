@@ -24,4 +24,9 @@ public class UserDAO extends BaseDAO<User> implements IUserDAO {
         return super.getSession().createQuery(sql).
                 setParameter("login", login).uniqueResult() == null;
     }
+
+    @Override
+    public void detachUserFromSession(User user) {
+        getSession().detach(user);
+    }
 }

@@ -22,10 +22,10 @@ public class DAOTest {
     @Test
     public void test() {
         int size = userDAO.getAll().size();
-        User user = new User("user", "password", "3");
+        User user = new User("user3", "password", "3");
         userDAO.saveOrUpdate(user);
         int id = user.getId();
-        assertEquals(user, userDAO.get("user"));
+        assertEquals(user, userDAO.get("user3"));
         assertEquals(++size, userDAO.getAll().size());
         user.setPassword("pass");
         userDAO.saveOrUpdate(user);

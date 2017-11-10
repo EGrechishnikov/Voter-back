@@ -6,8 +6,8 @@ import java.util.ResourceBundle;
 
 public class PasswordHash {
     private static String localHexParameter = ResourceBundle.getBundle("config").
-            getString("localHexParameter");
-    final protected static char[] hexArray = "0123456789abcdef".toCharArray();
+            getString("local.hex.parameter");
+    private final static char[] hexArray = "0123456789abcdef".toCharArray();
 
     /**
      * Hash the string with salt and local parameter

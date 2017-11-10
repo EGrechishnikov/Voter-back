@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name = "user")
 @Data
 @NoArgsConstructor
-@ToString(exclude = {"votesList", "createdVotingsList"})
+@ToString(exclude = {"votesList", "createdVotingList"})
 public class User implements Bean {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class User implements Bean {
     private List<Vote> votesList = new ArrayList<>();
     @OneToMany(mappedBy = "creator")
     @JsonIgnore
-    private List<Voting> createdVotingsList = new ArrayList<>();
+    private List<Voting> createdVotingList = new ArrayList<>();
 
     public User(String login, String password, String salt) {
         this.login = login;

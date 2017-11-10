@@ -19,9 +19,13 @@ public class Vote implements Bean {
     @ManyToOne
     @JoinColumn(name = "FK_Voter", nullable = false)
     private User voter;
+    @ManyToOne
+    @JoinColumn(name = "FK_Variant", nullable = false)
+    private Variant variant;
 
-    public Vote(User voter) {
+    public Vote(User voter, Variant variant) {
         date = new Date();
         this.voter = voter;
+        this.variant = variant;
     }
 }
