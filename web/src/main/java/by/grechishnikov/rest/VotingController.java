@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
+@RequestMapping(value = "/voting")
 public class VotingController {
     private static Logger logger = Logger.getLogger(VotingController.class);
     private IVotingService votingService;
@@ -21,7 +22,7 @@ public class VotingController {
         this.votingService = votingService;
     }
 
-    @RequestMapping(value = "/voting/all/{page}", method = RequestMethod.GET)
+    @RequestMapping(value = "/all/{page}", method = RequestMethod.GET)
     public ResponseEntity<List<Voting>> getAll(@PathVariable int page ) {
         try {
             logger.warn("GET ALL VOTING");
@@ -34,7 +35,7 @@ public class VotingController {
         }
     }
 
-    @RequestMapping(value = "/voting/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity addVoting(@RequestBody Voting voting) {
         try {
             logger.warn("ADD VOTING: " + voting);

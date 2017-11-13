@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
+@RequestMapping(value = "/user")
 public class MainController {
     private IUserService userService;
     private Logger logger = Logger.getLogger(MainController.class);
@@ -19,7 +20,7 @@ public class MainController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/user/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Boolean> add(@RequestBody User user) {
         try {
             logger.warn("NEW USER: " + user);
@@ -30,24 +31,11 @@ public class MainController {
         }
     }
 
-    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<User> login(@RequestBody User user) {
         try {
             logger.warn("CHECK USER: " + user);
             return new ResponseEntity<>(userService.login(user), HttpStatus.OK);
-        } catch (Exception e) {
-            logger.error("ERROR!", e);
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @RequestMapping(value = "/user/check/{id}", method = RequestMethod.GET)
-    public ResponseEntity<User> get(@PathVariable int id) {
-        try {
-            logger.warn("GET: " + id);
-            User user = userService.get(id);
-            logger.warn("USER: " + user);
-            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("ERROR!", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

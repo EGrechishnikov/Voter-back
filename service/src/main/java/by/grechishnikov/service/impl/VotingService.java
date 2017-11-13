@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.*;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,9 +33,10 @@ public class VotingService implements IVotingService {
         for(Variant variant : voting.getVariants()) {
             variant.setVoting(voting);
         }
-        logger.warn("VOTING: " + voting);
-        logger.warn("VARS: " + voting.getVariants());
         votingDAO.saveOrUpdate(voting);
+//        if(voting.getImage() != null) {
+//            saveImage(voting);
+//        }
     }
 
     @Override
@@ -57,5 +59,17 @@ public class VotingService implements IVotingService {
         int start = (page - 1) * defaultCountPerPage/* + 1*/;
         logger.warn("GET ALL. PAGE: " + page + ", START: " + start);
         return votingDAO.getAll(start, defaultCountPerPage);
+    }
+
+    private void saveImage(Voting voting) {
+        String file = String.format("images/%s-%d/", voting.getCreator().getLogin(), voting.getId());
+        logger.warn("SAVE IMAGE TO: " + file);
+        try(FileOutputStream output = new FileOutputStream(file)) {
+            output.write(voting.getImage());
+            output.flush();
+            voting.setImageLink(file);
+        } catch (IOException e) {
+            logger.error("SAVE IMAGE EXCEPTION", e);
+        }
     }
 }

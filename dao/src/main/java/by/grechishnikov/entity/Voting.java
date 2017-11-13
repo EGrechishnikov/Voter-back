@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 @Table(name = "voting")
 @Data
 @NoArgsConstructor
-@ToString(exclude = "variants")
+@ToString(exclude = {"variants", "image"})
 public class Voting implements Bean {
     private static int defaultAccessPeriod =
             Integer.parseInt(ResourceBundle.getBundle("config").getString("default.voting.access.period"));
@@ -27,6 +27,8 @@ public class Voting implements Bean {
     @Column
     private String description;
     @Column
+    private String imageLink;
+    @Column
     private Date openDate;
     @Column
     private Date closingDate;
@@ -35,6 +37,8 @@ public class Voting implements Bean {
     private User creator;
     @OneToMany(mappedBy = "voting", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Variant> variants = new ArrayList<>();
+
+    private transient byte[] image;
 
     public Voting(String name, String description, int accessPeriod, User creator) {
         this.name = name;

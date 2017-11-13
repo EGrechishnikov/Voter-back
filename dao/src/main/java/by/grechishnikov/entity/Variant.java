@@ -22,8 +22,6 @@ public class Variant implements Bean {
     private String name;
     @Column(length = 140)
     private String description;
-    @Column
-    private byte[] image;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "FK_Voting")
