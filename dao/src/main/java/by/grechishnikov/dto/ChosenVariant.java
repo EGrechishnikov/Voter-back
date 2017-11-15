@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MyVote {
-    private int votingId;
+public class ChosenVariant {
     private int variantId;
+    private int count;
 }

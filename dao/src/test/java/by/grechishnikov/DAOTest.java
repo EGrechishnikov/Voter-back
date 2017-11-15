@@ -1,6 +1,7 @@
 package by.grechishnikov;
 
 import by.grechishnikov.dao.IUserDAO;
+import by.grechishnikov.dao.IVoteDAO;
 import by.grechishnikov.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,8 @@ import static org.junit.Assert.*;
 public class DAOTest {
     @Autowired
     private IUserDAO userDAO;
+    @Autowired
+    private IVoteDAO voteDAO;
 
     @Test
     public void test() {

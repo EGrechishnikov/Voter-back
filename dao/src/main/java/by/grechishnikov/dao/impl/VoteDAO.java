@@ -22,7 +22,7 @@ public class VoteDAO extends BaseDAO<Vote> implements IVoteDAO {
     public List<MyVote> getAllVotesForUser(int userId) {
         String sql = "SELECT variant.voting.id, variant.id FROM Vote WHERE voter.id = :id";
         List<Object[]> answer =
-                super.getSession().createQuery(sql).setParameter("id", userId).list();
+                getSession().createQuery(sql).setParameter("id", userId).list();
         List<MyVote> result = new ArrayList<>();
         for(Object[] arr : answer) {
             result.add(new MyVote((int) arr[0], (int) arr[1]));

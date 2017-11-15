@@ -1,5 +1,6 @@
 package by.grechishnikov.rest;
 
+import by.grechishnikov.dto.ChosenVariant;
 import by.grechishnikov.entity.Voting;
 import by.grechishnikov.service.IVotingService;
 import org.apache.log4j.Logger;
@@ -45,6 +46,19 @@ public class VotingController {
         } catch (Exception e) {
             logger.error("ADD VOTING EXCEPTION.", e);
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/result/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<ChosenVariant>> getVotingResult(@PathVariable(name = "id") int votingId) {
+        try {
+            logger.warn("GET RESULT FOR VOTING: " + votingId);
+            List<ChosenVariant> list = votingService.getAllVotesForVoting(votingId);
+            logger.warn("LIST: " + list);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("GET VOTING RESULT EXCEPTION.", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

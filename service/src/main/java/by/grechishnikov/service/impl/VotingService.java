@@ -1,6 +1,7 @@
 package by.grechishnikov.service.impl;
 
 import by.grechishnikov.dao.IVotingDAO;
+import by.grechishnikov.dto.ChosenVariant;
 import by.grechishnikov.entity.Variant;
 import by.grechishnikov.entity.Voting;
 import by.grechishnikov.service.IVotingService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -59,6 +61,16 @@ public class VotingService implements IVotingService {
         int start = (page - 1) * defaultCountPerPage/* + 1*/;
         logger.warn("GET ALL. PAGE: " + page + ", START: " + start);
         return votingDAO.getAll(start, defaultCountPerPage);
+    }
+
+    @Override
+    public List<ChosenVariant> getAllVotesForVoting(int votingId) {
+        Voting voting = votingDAO.get(votingId);
+        List<ChosenVariant> result = new ArrayList<>();
+        for(Variant variant : voting.getVariants()) {
+            result.add(new ChosenVariant(variant.getId(), variant.getVoteList().size()));
+        }
+        return result;
     }
 
     private void saveImage(Voting voting) {

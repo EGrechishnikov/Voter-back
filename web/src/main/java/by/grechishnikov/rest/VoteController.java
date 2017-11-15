@@ -35,7 +35,7 @@ public class VoteController {
     }
 
     @RequestMapping(value = "/votes/get/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<List<MyVote>> getAll(@PathVariable int userId) {
+    public ResponseEntity<List<MyVote>> getAllVoteForUser(@PathVariable int userId) {
         try {
             logger.warn("GET ALL VOTES FOR ID: " + userId);
             List<MyVote> list = voteService.getAllVotesForUser(userId);

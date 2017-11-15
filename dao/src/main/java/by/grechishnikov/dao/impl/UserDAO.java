@@ -14,15 +14,14 @@ public class UserDAO extends BaseDAO<User> implements IUserDAO {
     }
 
     public User get(String login) {
-        return (User) super.getSession().createQuery("FROM User WHERE login = :login").
-                setParameter("login", login).uniqueResult();
+        String sql = "FROM User WHERE login = :login";
+        return (User) getSession().createQuery(sql).setParameter("login", login).uniqueResult();
     }
 
     @Override
     public boolean isLoginFree(String login) {
         String sql = "SELECT id FROM User WHERE login = :login";
-        return super.getSession().createQuery(sql).
-                setParameter("login", login).uniqueResult() == null;
+        return getSession().createQuery(sql).setParameter("login", login).uniqueResult() == null;
     }
 
     @Override
