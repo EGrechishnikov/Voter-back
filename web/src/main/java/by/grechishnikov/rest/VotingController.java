@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class VotingController {
     }
 
     @RequestMapping(value = "/all/{page}", method = RequestMethod.GET)
-    public ResponseEntity<List<Voting>> getAll(@PathVariable int page ) {
+    public ResponseEntity<List<Voting>> getAll(@PathVariable int page) {
         try {
             logger.warn("GET ALL VOTING");
             List<Voting> list = votingService.getAll(page);
@@ -37,11 +38,12 @@ public class VotingController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResponseEntity addVoting(@RequestBody Voting voting) {
+    public ResponseEntity addVoting(@RequestParam(value = "voting") String voting,
+                                    @RequestParam(value = "file", required = false) MultipartFile file,
+                                    @RequestParam(value = "fileName", required = false) String fileName) {
         try {
-            logger.warn("ADD VOTING: " + voting);
-            logger.warn("VARIANTES: " + voting.getVariants());
-            votingService.saveOrUpdate(voting);
+            logger.warn("ADD VOTING");
+            votingService.createVoting(voting, file.getBytes(), fileName);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("ADD VOTING EXCEPTION.", e);

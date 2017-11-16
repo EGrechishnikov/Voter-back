@@ -5,6 +5,7 @@ import by.grechishnikov.dto.ChosenVariant;
 import by.grechishnikov.entity.Variant;
 import by.grechishnikov.entity.Voting;
 import by.grechishnikov.service.IVotingService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,8 @@ import java.util.ResourceBundle;
 @Transactional
 public class VotingService implements IVotingService {
     private Logger logger = Logger.getLogger(VotingService.class);
+    private static String defaultImgPackage =
+            ResourceBundle.getBundle("config").getString("default.package.for.images");
     private static int defaultCountPerPage =
             Integer.parseInt(ResourceBundle.getBundle("config").getString("default.count.per.page"));
 
@@ -31,14 +34,7 @@ public class VotingService implements IVotingService {
 
     @Override
     public void saveOrUpdate(Voting voting) {
-        voting.setClosingDate();
-        for(Variant variant : voting.getVariants()) {
-            variant.setVoting(voting);
-        }
         votingDAO.saveOrUpdate(voting);
-//        if(voting.getImage() != null) {
-//            saveImage(voting);
-//        }
     }
 
     @Override
@@ -73,11 +69,30 @@ public class VotingService implements IVotingService {
         return result;
     }
 
-    private void saveImage(Voting voting) {
-        String file = String.format("images/%s-%d/", voting.getCreator().getLogin(), voting.getId());
+    @Override
+    public void createVoting(String json, byte[] bytes, String fileName) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Voting voting = mapper.readValue(json, Voting.class);
+            voting.setClosingDate();
+            for(Variant variant : voting.getVariants()) {
+                variant.setVoting(voting);
+            }
+            if(bytes.length > 0) {
+                saveImage(voting, bytes, fileName);
+            }
+            logger.warn(voting);
+        } catch (IOException e) {
+            logger.error("MAPPING ERROR.", e);
+        }
+    }
+
+    private void saveImage(Voting voting, byte[] bytes, String fileName) {
+        String file = String.format("%s%s-%d-%s", defaultImgPackage,
+                voting.getCreator().getLogin(), voting.getId(), fileName);
         logger.warn("SAVE IMAGE TO: " + file);
         try(FileOutputStream output = new FileOutputStream(file)) {
-            output.write(voting.getImage());
+            output.write(bytes);
             output.flush();
             voting.setImageLink(file);
         } catch (IOException e) {
