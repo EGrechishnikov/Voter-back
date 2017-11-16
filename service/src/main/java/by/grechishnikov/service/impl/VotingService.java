@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 @Transactional
 public class VotingService implements IVotingService {
     private Logger logger = Logger.getLogger(VotingService.class);
-    private static String defaultImgPackage =
+    private static final String DEFAULT_IMG_PACKAGE =
             ResourceBundle.getBundle("config").getString("default.package.for.images");
     private static int defaultCountPerPage =
             Integer.parseInt(ResourceBundle.getBundle("config").getString("default.count.per.page"));
@@ -78,17 +78,17 @@ public class VotingService implements IVotingService {
             for(Variant variant : voting.getVariants()) {
                 variant.setVoting(voting);
             }
+            saveOrUpdate(voting);
             if(bytes.length > 0) {
                 saveImage(voting, bytes, fileName);
             }
-            logger.warn(voting);
         } catch (IOException e) {
             logger.error("MAPPING ERROR.", e);
         }
     }
 
     private void saveImage(Voting voting, byte[] bytes, String fileName) {
-        String file = String.format("%s%s-%d-%s", defaultImgPackage,
+        String file = String.format("%s%s-%d-%s", DEFAULT_IMG_PACKAGE,
                 voting.getCreator().getLogin(), voting.getId(), fileName);
         logger.warn("SAVE IMAGE TO: " + file);
         try(FileOutputStream output = new FileOutputStream(file)) {
