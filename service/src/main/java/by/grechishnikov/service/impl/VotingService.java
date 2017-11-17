@@ -20,8 +20,10 @@ import java.util.ResourceBundle;
 @Transactional
 public class VotingService implements IVotingService {
     private Logger logger = Logger.getLogger(VotingService.class);
-    private static final String DEFAULT_IMG_PACKAGE =
-            ResourceBundle.getBundle("config").getString("default.package.for.images");
+    private static final String IMG_PACKAGE =
+            ResourceBundle.getBundle("config").getString("package.for.images");
+    private static final String IMG_URL =
+            ResourceBundle.getBundle("config").getString("image.url.package");
     private static int defaultCountPerPage =
             Integer.parseInt(ResourceBundle.getBundle("config").getString("default.count.per.page"));
 
@@ -88,13 +90,16 @@ public class VotingService implements IVotingService {
     }
 
     private void saveImage(Voting voting, byte[] bytes, String fileName) {
-        String file = String.format("%s%s-%d-%s", DEFAULT_IMG_PACKAGE,
+        String newFileName = String.format("%s-%d-%s",
                 voting.getCreator().getLogin(), voting.getId(), fileName);
-        logger.warn("SAVE IMAGE TO: " + file);
-        try(FileOutputStream output = new FileOutputStream(file)) {
+        String path = IMG_PACKAGE + newFileName;
+        String url = IMG_URL + newFileName;
+        logger.warn("SAVE IMAGE TO: " + path);
+        logger.warn("URL: " + url);
+        try(FileOutputStream output = new FileOutputStream(path)) {
             output.write(bytes);
             output.flush();
-            voting.setImageLink(file);
+            voting.setImageLink(url);
         } catch (IOException e) {
             logger.error("SAVE IMAGE EXCEPTION", e);
         }
