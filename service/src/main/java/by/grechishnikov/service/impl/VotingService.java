@@ -65,7 +65,7 @@ public class VotingService implements IVotingService {
     public List<ChosenVariantDTO> getAllVotesForVoting(int votingId) {
         Voting voting = votingDAO.get(votingId);
         List<ChosenVariantDTO> result = new ArrayList<>();
-        for(Variant variant : voting.getVariants()) {
+        for (Variant variant : voting.getVariants()) {
             result.add(new ChosenVariantDTO(variant.getId(), variant.getVoteList().size()));
         }
         return result;
@@ -77,11 +77,11 @@ public class VotingService implements IVotingService {
             ObjectMapper mapper = new ObjectMapper();
             Voting voting = mapper.readValue(json, Voting.class);
             voting.setClosingDate();
-            for(Variant variant : voting.getVariants()) {
+            for (Variant variant : voting.getVariants()) {
                 variant.setVoting(voting);
             }
             saveOrUpdate(voting);
-            if(bytes.length > 0) {
+            if (bytes.length > 0) {
                 saveImage(voting, bytes, fileName);
             }
         } catch (IOException e) {
@@ -89,6 +89,13 @@ public class VotingService implements IVotingService {
         }
     }
 
+    /**
+     * Save image to file system
+     *
+     * @param voting   - current voting
+     * @param bytes    - image
+     * @param fileName - image name
+     */
     private void saveImage(Voting voting, byte[] bytes, String fileName) {
         String newFileName = String.format("%s-%d-%s",
                 voting.getCreator().getLogin(), voting.getId(), fileName);
@@ -96,7 +103,7 @@ public class VotingService implements IVotingService {
         String url = IMG_URL + newFileName;
         logger.warn("SAVE IMAGE TO: " + path);
         logger.warn("URL: " + url);
-        try(FileOutputStream output = new FileOutputStream(path)) {
+        try (FileOutputStream output = new FileOutputStream(path)) {
             output.write(bytes);
             output.flush();
             voting.setImageLink(url);

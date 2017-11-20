@@ -4,7 +4,6 @@ import by.grechishnikov.dao.IBaseDAO;
 import by.grechishnikov.entity.Bean;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.ParameterizedType;
@@ -41,6 +40,11 @@ public class BaseDAO<T extends Bean> implements IBaseDAO<T> {
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
+    /**
+     * Get current session
+     *
+     * @return - session
+     */
     Session getSession() {
         return sessionFactory.getCurrentSession();
     }

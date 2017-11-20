@@ -5,6 +5,15 @@ import by.grechishnikov.entity.Vote;
 
 import java.util.List;
 
-public interface IVoteDAO extends IBaseDAO<Vote>{
+/**
+ * DAO for Vote entity
+ */
+public interface IVoteDAO extends IBaseDAO<Vote> {
+    /**
+     * Get list of user votes
+     *
+     * @param userId - user id in DB
+     * @return - list
+     */
     List<MyVoteDTO> getAllVotesForUser(int userId);
 }

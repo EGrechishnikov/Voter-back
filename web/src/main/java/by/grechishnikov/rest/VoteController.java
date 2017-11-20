@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Rest controller for Vote entity
+ */
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
 public class VoteController {
@@ -22,6 +25,12 @@ public class VoteController {
         this.voteService = voteService;
     }
 
+    /**
+     * Add a new vote to DB
+     *
+     * @param vote - vote
+     * @return - http status
+     */
     @RequestMapping(value = "/vote/add", method = RequestMethod.POST)
     public ResponseEntity addVote(@RequestBody Vote vote) {
         try {
@@ -34,6 +43,12 @@ public class VoteController {
         }
     }
 
+    /**
+     * Get vote list for user
+     *
+     * @param userId - user id in DB
+     * @return - list
+     */
     @RequestMapping(value = "/votes/get/{userId}", method = RequestMethod.GET)
     public ResponseEntity<List<MyVoteDTO>> getAllVoteForUser(@PathVariable int userId) {
         try {

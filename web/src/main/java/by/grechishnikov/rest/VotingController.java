@@ -12,6 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+/**
+ * Rest controller for Voting entity
+ */
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
 @RequestMapping(value = "/voting")
@@ -24,6 +27,12 @@ public class VotingController {
         this.votingService = votingService;
     }
 
+    /**
+     * Get voting for pagination
+     *
+     * @param page - number of page
+     * @return - list
+     */
     @RequestMapping(value = "/all/{page}", method = RequestMethod.GET)
     public ResponseEntity<List<Voting>> getAll(@PathVariable int page) {
         try {
@@ -37,6 +46,14 @@ public class VotingController {
         }
     }
 
+    /**
+     * Add a new voting to DB
+     *
+     * @param voting   - voting
+     * @param file     - image
+     * @param fileName - image name
+     * @return - http status
+     */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity addVoting(@RequestParam(value = "voting") String voting,
                                     @RequestParam(value = "file", required = false) MultipartFile file,
@@ -51,6 +68,12 @@ public class VotingController {
         }
     }
 
+    /**
+     * Get result for voting
+     *
+     * @param votingId - voting id in DB
+     * @return - list
+     */
     @RequestMapping(value = "/result/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<ChosenVariantDTO>> getVotingResult(@PathVariable(name = "id") int votingId) {
         try {

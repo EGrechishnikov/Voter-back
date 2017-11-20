@@ -3,6 +3,9 @@ package by.grechishnikov.entity;
 
 import java.io.Serializable;
 
+/**
+ * Parent interface for all entities
+ */
 public interface Bean extends Serializable {
-    public void setId(int id);
+    void setId(int id);
 }

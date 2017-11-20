@@ -24,7 +24,7 @@ public class UserService implements IUserService {
     @Override
     public void saveOrUpdate(User user) {
         if (isUsersParamValid(user)) {
-            if(user.getSalt() != null) {
+            if (user.getSalt() != null) {
                 userDAO.saveOrUpdate(user);
             } else {
                 createNewUser(user);
@@ -52,17 +52,29 @@ public class UserService implements IUserService {
         return userDAO.get(login);
     }
 
+    /**
+     * Check users param
+     *
+     * @param user - user entity
+     * @return - true if params valid
+     */
     private boolean isUsersParamValid(User user) {
         return user.getLogin().length() > 0 && user.getPassword().length() > 0;
     }
 
+    /**
+     * Check is login free in DB
+     *
+     * @param login - login
+     * @return - true if free
+     */
     private boolean isLoginFree(String login) {
         return userDAO.isLoginFree(login);
     }
 
     @Override
     public boolean createNewUser(User user) {
-        if(isUsersParamValid(user) && isLoginFree(user.getLogin())) {
+        if (isUsersParamValid(user) && isLoginFree(user.getLogin())) {
             user.setSalt(PasswordHash.getSalt());
             hashUserPassword(user);
             saveOrUpdate(user);
@@ -74,12 +86,12 @@ public class UserService implements IUserService {
 
     @Override
     public UserDTO login(User user) {
-        if(isUsersParamValid(user)) {
+        if (isUsersParamValid(user)) {
             User userInDB = get(user.getLogin());
-            if(userInDB != null && userInDB.getLogin().equals(user.getLogin())) {
+            if (userInDB != null && userInDB.getLogin().equals(user.getLogin())) {
                 user.setSalt(userInDB.getSalt());
                 hashUserPassword(user);
-                if(user.getPassword().equals(userInDB.getPassword())) {
+                if (user.getPassword().equals(userInDB.getPassword())) {
                     return new UserDTO(userInDB.getId(), userInDB.getLogin());
                 }
             }
@@ -87,6 +99,11 @@ public class UserService implements IUserService {
         return null;
     }
 
+    /**
+     * Hashing users password
+     *
+     * @param user - user
+     */
     private void hashUserPassword(User user) {
         String newPassword = PasswordHash.getHex(user.getSalt() + user.getPassword());
         user.setPassword(newPassword);

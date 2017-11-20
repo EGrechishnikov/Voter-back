@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Rest controller for users entity
+ */
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
 @RequestMapping(value = "/user")
@@ -21,6 +24,12 @@ public class UserController {
         this.userService = userService;
     }
 
+    /**
+     * Add a new user to DB
+     *
+     * @param user - user
+     * @return - true if all right
+     */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public ResponseEntity<Boolean> add(@RequestBody User user) {
         try {
@@ -32,6 +41,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Do login
+     *
+     * @param user - user
+     * @return - DTO with users data
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<UserDTO> login(@RequestBody User user) {
         try {
