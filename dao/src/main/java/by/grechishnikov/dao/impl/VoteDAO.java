@@ -1,7 +1,7 @@
 package by.grechishnikov.dao.impl;
 
 import by.grechishnikov.dao.IVoteDAO;
-import by.grechishnikov.dto.MyVote;
+import by.grechishnikov.dto.MyVoteDTO;
 import by.grechishnikov.entity.Vote;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +19,13 @@ public class VoteDAO extends BaseDAO<Vote> implements IVoteDAO {
     }
 
     @Override
-    public List<MyVote> getAllVotesForUser(int userId) {
+    public List<MyVoteDTO> getAllVotesForUser(int userId) {
         String sql = "SELECT variant.voting.id, variant.id FROM Vote WHERE voter.id = :id";
         List<Object[]> answer =
                 getSession().createQuery(sql).setParameter("id", userId).list();
-        List<MyVote> result = new ArrayList<>();
+        List<MyVoteDTO> result = new ArrayList<>();
         for(Object[] arr : answer) {
-            result.add(new MyVote((int) arr[0], (int) arr[1]));
+            result.add(new MyVoteDTO((int) arr[0], (int) arr[1]));
         }
         return result;
     }

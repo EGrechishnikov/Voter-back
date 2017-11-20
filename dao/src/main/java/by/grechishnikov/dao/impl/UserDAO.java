@@ -13,6 +13,7 @@ public class UserDAO extends BaseDAO<User> implements IUserDAO {
         super(sessionFactory);
     }
 
+    @Override
     public User get(String login) {
         String sql = "FROM User WHERE login = :login";
         return (User) getSession().createQuery(sql).setParameter("login", login).uniqueResult();
@@ -22,10 +23,5 @@ public class UserDAO extends BaseDAO<User> implements IUserDAO {
     public boolean isLoginFree(String login) {
         String sql = "SELECT id FROM User WHERE login = :login";
         return getSession().createQuery(sql).setParameter("login", login).uniqueResult() == null;
-    }
-
-    @Override
-    public void detachUserFromSession(User user) {
-        getSession().detach(user);
     }
 }

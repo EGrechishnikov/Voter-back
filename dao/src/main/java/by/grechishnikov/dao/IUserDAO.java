@@ -6,6 +6,4 @@ public interface IUserDAO extends IBaseDAO<User> {
     User get(String login);
 
     boolean isLoginFree(String login);
-
-    void detachUserFromSession(User user);
 }

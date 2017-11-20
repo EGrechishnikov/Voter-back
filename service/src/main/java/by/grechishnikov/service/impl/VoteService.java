@@ -1,7 +1,7 @@
 package by.grechishnikov.service.impl;
 
 import by.grechishnikov.dao.IVoteDAO;
-import by.grechishnikov.dto.MyVote;
+import by.grechishnikov.dto.MyVoteDTO;
 import by.grechishnikov.entity.Vote;
 import by.grechishnikov.service.IVoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class VoteService implements IVoteService {
     }
 
     @Override
-    public List<MyVote> getAllVotesForUser(int userId) {
+    public List<MyVoteDTO> getAllVotesForUser(int userId) {
         return voteDAO.getAllVotesForUser(userId);
     }
 }

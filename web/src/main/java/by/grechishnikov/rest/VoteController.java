@@ -1,6 +1,6 @@
 package by.grechishnikov.rest;
 
-import by.grechishnikov.dto.MyVote;
+import by.grechishnikov.dto.MyVoteDTO;
 import by.grechishnikov.entity.Vote;
 import by.grechishnikov.service.IVoteService;
 import org.apache.log4j.Logger;
@@ -35,10 +35,10 @@ public class VoteController {
     }
 
     @RequestMapping(value = "/votes/get/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<List<MyVote>> getAllVoteForUser(@PathVariable int userId) {
+    public ResponseEntity<List<MyVoteDTO>> getAllVoteForUser(@PathVariable int userId) {
         try {
             logger.warn("GET ALL VOTES FOR ID: " + userId);
-            List<MyVote> list = voteService.getAllVotesForUser(userId);
+            List<MyVoteDTO> list = voteService.getAllVotesForUser(userId);
             logger.warn("LIST: " + list);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {

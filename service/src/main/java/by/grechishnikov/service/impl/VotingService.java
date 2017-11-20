@@ -1,7 +1,7 @@
 package by.grechishnikov.service.impl;
 
 import by.grechishnikov.dao.IVotingDAO;
-import by.grechishnikov.dto.ChosenVariant;
+import by.grechishnikov.dto.ChosenVariantDTO;
 import by.grechishnikov.entity.Variant;
 import by.grechishnikov.entity.Voting;
 import by.grechishnikov.service.IVotingService;
@@ -62,11 +62,11 @@ public class VotingService implements IVotingService {
     }
 
     @Override
-    public List<ChosenVariant> getAllVotesForVoting(int votingId) {
+    public List<ChosenVariantDTO> getAllVotesForVoting(int votingId) {
         Voting voting = votingDAO.get(votingId);
-        List<ChosenVariant> result = new ArrayList<>();
+        List<ChosenVariantDTO> result = new ArrayList<>();
         for(Variant variant : voting.getVariants()) {
-            result.add(new ChosenVariant(variant.getId(), variant.getVoteList().size()));
+            result.add(new ChosenVariantDTO(variant.getId(), variant.getVoteList().size()));
         }
         return result;
     }

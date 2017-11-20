@@ -1,5 +1,6 @@
 package by.grechishnikov.rest;
 
+import by.grechishnikov.dto.UserDTO;
 import by.grechishnikov.entity.User;
 import by.grechishnikov.service.IUserService;
 import org.apache.log4j.Logger;
@@ -11,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
 @RequestMapping(value = "/user")
-public class MainController {
+public class UserController {
     private IUserService userService;
-    private Logger logger = Logger.getLogger(MainController.class);
+    private Logger logger = Logger.getLogger(UserController.class);
 
     @Autowired
-    public MainController(IUserService userService) {
+    public UserController(IUserService userService) {
         this.userService = userService;
     }
 
@@ -32,7 +33,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<User> login(@RequestBody User user) {
+    public ResponseEntity<UserDTO> login(@RequestBody User user) {
         try {
             logger.warn("CHECK USER: " + user);
             return new ResponseEntity<>(userService.login(user), HttpStatus.OK);

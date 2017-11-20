@@ -1,10 +1,10 @@
 package by.grechishnikov.service.impl;
 
 import by.grechishnikov.dao.IUserDAO;
+import by.grechishnikov.dto.UserDTO;
 import by.grechishnikov.entity.User;
 import by.grechishnikov.sequrity.PasswordHash;
 import by.grechishnikov.service.IUserService;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 @Transactional
 public class UserService implements IUserService {
-    private Logger logger = Logger.getLogger(UserService.class);
     private IUserDAO userDAO;
 
     @Autowired
@@ -74,17 +73,14 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User login(User user) {
-        logger.warn("USER LOGIN: " +  user);
+    public UserDTO login(User user) {
         if(isUsersParamValid(user)) {
             User userInDB = get(user.getLogin());
-            logger.warn("USER IN DB: " + userInDB);
             if(userInDB != null && userInDB.getLogin().equals(user.getLogin())) {
                 user.setSalt(userInDB.getSalt());
                 hashUserPassword(user);
                 if(user.getPassword().equals(userInDB.getPassword())) {
-                    userDAO.detachUserFromSession(userInDB);
-                    return userInDB;
+                    return new UserDTO(userInDB.getId(), userInDB.getLogin());
                 }
             }
         }
