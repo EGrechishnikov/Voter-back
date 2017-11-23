@@ -20,7 +20,6 @@ public class BaseDAO<T extends Bean> implements IBaseDAO<T> {
 
     public void saveOrUpdate(T t) {
         getSession().saveOrUpdate(t);
-        t.setId((Integer) getSession().getIdentifier(t));
     }
 
     public T get(int id) {
