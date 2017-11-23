@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 @Service
 @Transactional
 public class VotingService implements IVotingService {
-    private Logger logger = Logger.getLogger(VotingService.class);
+    private static Logger logger = Logger.getLogger(VotingService.class);
     private static final String IMG_PACKAGE =
             ResourceBundle.getBundle("config").getString("package.for.images");
     private static final String IMG_URL =

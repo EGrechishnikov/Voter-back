@@ -18,7 +18,7 @@ import java.util.List;
 @CrossOrigin(value = "http://localhost:3000")
 public class VoteController {
     private IVoteService voteService;
-    private Logger logger = Logger.getLogger(VoteController.class);
+    private static Logger logger = Logger.getLogger(VoteController.class);
 
     @Autowired
     public VoteController(IVoteService voteService) {

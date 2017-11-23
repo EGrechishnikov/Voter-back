@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/user")
 public class UserController {
     private IUserService userService;
-    private Logger logger = Logger.getLogger(UserController.class);
+    private static Logger logger = Logger.getLogger(UserController.class);
 
     @Autowired
     public UserController(IUserService userService) {
