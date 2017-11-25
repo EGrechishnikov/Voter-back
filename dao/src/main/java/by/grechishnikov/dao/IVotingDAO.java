@@ -16,4 +16,11 @@ public interface IVotingDAO extends IBaseDAO<Voting> {
      * @return - list
      */
     List<Voting> getAll(int start, int count);
+
+
+    /**
+     * Get count of all voting records
+     * @return - count
+     */
+    long getCountOfAllVotings();
 }

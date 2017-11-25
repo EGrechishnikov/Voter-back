@@ -21,4 +21,10 @@ public class VotingDAO extends BaseDAO<Voting> implements IVotingDAO {
         String sql = "FROM Voting ORDER BY closingDate";
         return getSession().createQuery(sql).setFirstResult(start).setMaxResults(count).list();
     }
+
+    @Override
+    public long getCountOfAllVotings() {
+        String sql = "SELECT COUNT(*) FROM Voting";
+        return (long) getSession().createQuery(sql).uniqueResult();
+    }
 }

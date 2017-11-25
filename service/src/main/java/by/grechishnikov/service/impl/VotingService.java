@@ -2,6 +2,7 @@ package by.grechishnikov.service.impl;
 
 import by.grechishnikov.dao.IVotingDAO;
 import by.grechishnikov.dto.ChosenVariantDTO;
+import by.grechishnikov.dto.VotingsDTO;
 import by.grechishnikov.entity.Variant;
 import by.grechishnikov.entity.Voting;
 import by.grechishnikov.service.IVotingService;
@@ -55,10 +56,11 @@ public class VotingService implements IVotingService {
     }
 
     @Override
-    public List<Voting> getAll(int page) {
-        int start = (page - 1) * defaultCountPerPage/* + 1*/;
-        logger.warn("GET ALL. PAGE: " + page + ", START: " + start);
-        return votingDAO.getAll(start, defaultCountPerPage);
+    public VotingsDTO getAll(int page) {
+        int start = (page - 1) * defaultCountPerPage;
+        long recordsCount = votingDAO.getCountOfAllVotings();
+        List<Voting> votingList = votingDAO.getAll(start, defaultCountPerPage);
+        return new VotingsDTO(votingList, recordsCount);
     }
 
     @Override

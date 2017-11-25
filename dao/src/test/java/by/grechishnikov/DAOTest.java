@@ -1,6 +1,7 @@
 package by.grechishnikov;
 
 import by.grechishnikov.dao.IUserDAO;
+import by.grechishnikov.dao.IVotingDAO;
 import by.grechishnikov.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,8 @@ import static org.junit.Assert.*;
 public class DAOTest {
     @Autowired
     private IUserDAO userDAO;
+    @Autowired
+    private IVotingDAO votingDAO;
 
     @Test
     public void test() {
@@ -33,5 +36,6 @@ public class DAOTest {
         userDAO.delete(user);
         assertEquals(--size, userDAO.getAll().size());
         assertNull(userDAO.get(user.getLogin()));
+        assertTrue(votingDAO.getCountOfAllVotings() > 0);
     }
 }

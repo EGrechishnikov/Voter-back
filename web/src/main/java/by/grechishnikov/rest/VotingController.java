@@ -1,7 +1,7 @@
 package by.grechishnikov.rest;
 
 import by.grechishnikov.dto.ChosenVariantDTO;
-import by.grechishnikov.entity.Voting;
+import by.grechishnikov.dto.VotingsDTO;
 import by.grechishnikov.service.IVotingService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +34,10 @@ public class VotingController {
      * @return - list
      */
     @RequestMapping(value = "/all/{page}", method = RequestMethod.GET)
-    public ResponseEntity<List<Voting>> getAll(@PathVariable int page) {
+    public ResponseEntity<VotingsDTO> getAll(@PathVariable int page) {
         try {
             logger.warn("GET ALL VOTING");
-            List<Voting> list = votingService.getAll(page);
-            logger.warn("LIST: " + list);
-            return new ResponseEntity<>(list, HttpStatus.OK);
+            return new ResponseEntity<>(votingService.getAll(page), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("VOTING EXCEPTION. GET ALL.", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

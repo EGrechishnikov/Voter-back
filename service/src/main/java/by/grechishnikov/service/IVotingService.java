@@ -1,6 +1,7 @@
 package by.grechishnikov.service;
 
 import by.grechishnikov.dto.ChosenVariantDTO;
+import by.grechishnikov.dto.VotingsDTO;
 import by.grechishnikov.entity.Voting;
 
 import java.util.List;
@@ -19,12 +20,12 @@ public interface IVotingService extends IBaseService<Voting> {
     void createVoting(String json, byte[] bytes, String fileName);
 
     /**
-     * Get voting list from DB
+     * Get voting list from DB with the count of all voting records
      *
      * @param page - number of page
-     * @return - list
+     * @return - dto that includes a list and a records count
      */
-    List<Voting> getAll(int page);
+    VotingsDTO getAll(int page);
 
     /**
      * Get all votes for voting
