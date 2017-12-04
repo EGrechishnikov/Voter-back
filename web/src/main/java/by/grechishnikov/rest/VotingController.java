@@ -5,11 +5,17 @@ import by.grechishnikov.dto.VotingsDTO;
 import by.grechishnikov.service.IVotingService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,7 +42,6 @@ public class VotingController {
     @RequestMapping(value = "/all/{page}", method = RequestMethod.GET)
     public ResponseEntity<VotingsDTO> getAll(@PathVariable int page) {
         try {
-            logger.warn("GET ALL VOTING");
             return new ResponseEntity<>(votingService.getAll(page), HttpStatus.OK);
         } catch (Exception e) {
             logger.error("VOTING EXCEPTION. GET ALL.", e);
@@ -57,8 +62,11 @@ public class VotingController {
                                     @RequestParam(value = "file", required = false) MultipartFile file,
                                     @RequestParam(value = "fileName", required = false) String fileName) {
         try {
-            logger.warn("ADD VOTING");
-            votingService.createVoting(voting, file.getBytes(), fileName);
+            if (file.isEmpty() && fileName == null) {
+                votingService.createVoting(voting);
+            } else {
+                votingService.createVoting(voting, file.getBytes(), fileName);
+            }
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             logger.error("ADD VOTING EXCEPTION.", e);

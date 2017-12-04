@@ -11,13 +11,27 @@ import java.util.List;
  */
 public interface IVotingService extends IBaseService<Voting> {
     /**
-     * Create voting
+     * Create voting by Voting record
+     *
+     * @param voting - dto
+     */
+    void createVoting(Voting voting);
+
+    /**
+     * Create voting with image by JSON
      *
      * @param json     - JSON with DTO object
      * @param bytes    - image
      * @param fileName - image name
      */
     void createVoting(String json, byte[] bytes, String fileName);
+
+    /**
+     * Create voting without image by JSON
+     *
+     * @param json - JSON with DTO object
+     */
+    void createVoting(String json);
 
     /**
      * Get voting list from DB with the count of all voting records

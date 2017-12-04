@@ -6,6 +6,7 @@ import by.grechishnikov.dto.VotingsDTO;
 import by.grechishnikov.entity.Variant;
 import by.grechishnikov.entity.Voting;
 import by.grechishnikov.service.IVotingService;
+import by.grechishnikov.utils.EncodingUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,20 +75,38 @@ public class VotingService implements IVotingService {
     }
 
     @Override
-    public void createVoting(String json, byte[] bytes, String fileName) {
+    public void createVoting(Voting voting) {
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            Voting voting = mapper.readValue(json, Voting.class);
             voting.setClosingDate();
             for (Variant variant : voting.getVariants()) {
                 variant.setVoting(voting);
             }
             saveOrUpdate(voting);
+        } catch (Exception e) {
+            logger.error("MAPPING ERROR.", e);
+        }
+    }
+
+    @Override
+    public void createVoting(String JSON) {
+        try {
+            Voting voting = unMarshal(JSON);
+            createVoting(voting);
+        } catch (Exception e) {
+            logger.error("MAPPING ERROR.", e);
+        }
+    }
+
+    @Override
+    public void createVoting(String JSON, byte[] bytes, String fileName) {
+        try {
+            Voting voting = unMarshal(JSON);
+            createVoting(voting);
             if (bytes.length > 0) {
                 saveImage(voting, bytes, fileName);
             }
-        } catch (IOException e) {
-            logger.error("MAPPING ERROR.", e);
+        } catch (Exception e) {
+            logger.error("MAPPING WITH IMAGE ERROR.", e);
         }
     }
 
@@ -112,5 +131,17 @@ public class VotingService implements IVotingService {
         } catch (IOException e) {
             logger.error("SAVE IMAGE EXCEPTION", e);
         }
+    }
+
+    /**
+     * Convert JSON to Voting record
+     *
+     * @param JSON - JSON string with record
+     * @return - Voting
+     */
+    private static Voting unMarshal(String JSON) throws Exception {
+        JSON = EncodingUtils.encodeFromISOToUTF(JSON);
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(JSON, Voting.class);
     }
 }

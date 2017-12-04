@@ -34,7 +34,7 @@ public class VoteController {
     @RequestMapping(value = "/vote/add", method = RequestMethod.POST)
     public ResponseEntity addVote(@RequestBody Vote vote) {
         try {
-            logger.warn("VOTE: " + vote);
+            logger.warn("ADD VOTE: " + vote);
             voteService.saveOrUpdate(vote);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
@@ -52,9 +52,7 @@ public class VoteController {
     @RequestMapping(value = "/votes/get/{userId}", method = RequestMethod.GET)
     public ResponseEntity<List<MyVoteDTO>> getAllVoteForUser(@PathVariable int userId) {
         try {
-            logger.warn("GET ALL VOTES FOR ID: " + userId);
             List<MyVoteDTO> list = voteService.getAllVotesForUser(userId);
-            logger.warn("LIST: " + list);
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("GET ALL VOTES EXCEPTION.", e);
