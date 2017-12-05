@@ -62,7 +62,8 @@ public class VotingController {
                                     @RequestParam(value = "file", required = false) MultipartFile file,
                                     @RequestParam(value = "fileName", required = false) String fileName) {
         try {
-            if (file.isEmpty() && fileName == null) {
+            logger.warn(file);
+            if (fileName == null || file.isEmpty()) {
                 votingService.createVoting(voting);
             } else {
                 votingService.createVoting(voting, file.getBytes(), fileName);
