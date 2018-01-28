@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="voter_app@localhost">
-  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.2">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
     <root id="1"/>
     <schema id="2" parent="1" name="voter_app">
       <Current>1</Current>
@@ -170,7 +170,7 @@
     </column>
     <column id="45" parent="12" name="imageLink">
       <Position>4</Position>
-      <DataType>varchar(100)|0</DataType>
+      <DataType>varchar(45)|0</DataType>
     </column>
     <column id="46" parent="12" name="openDate">
       <Position>5</Position>

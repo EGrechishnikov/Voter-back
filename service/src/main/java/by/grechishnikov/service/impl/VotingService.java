@@ -102,7 +102,7 @@ public class VotingService implements IVotingService {
         try {
             Voting voting = unMarshal(JSON);
             createVoting(voting);
-            if (bytes.length > 0) {
+            if (bytes.length > 0 && checkImageFileType(fileName)) {
                 saveImage(voting, bytes, fileName);
             }
         } catch (Exception e) {
@@ -131,6 +131,18 @@ public class VotingService implements IVotingService {
         } catch (IOException e) {
             logger.error("SAVE IMAGE EXCEPTION", e);
         }
+    }
+
+    /**
+     * Check image file type.
+     *
+     * @param fileName - image file name
+     * @return - true if file type is jpg, png, bmp or gif
+     */
+    private boolean checkImageFileType(String fileName) {
+        return (fileName.contains(".jpg") || fileName.contains(".jpeg") ||
+                fileName.contains("png") || fileName.contains(".bmp") ||
+                fileName.contains(".gif"));
     }
 
     /**
