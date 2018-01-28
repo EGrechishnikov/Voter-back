@@ -23,9 +23,10 @@ public class UtilsController {
 
     /**
      * Get records count per voting list page
+     *
      * @return - count
      */
-    @RequestMapping(value ="/voting/settings", method = RequestMethod.GET)
+    @RequestMapping(value = "/voting/settings", method = RequestMethod.GET)
     public ResponseEntity<Integer> getRecordsCountPerPage() {
         try {
             logger.warn("GET RECORD COUNT");
